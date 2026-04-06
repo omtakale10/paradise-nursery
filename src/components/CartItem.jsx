@@ -1,47 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { removeItem, increment, decrement } from "../redux/cartSlice";
 
 const CartItem = () => {
-  const [cartItems, setCartItems] = useState([
-    { id: 1, name: "Aloe Vera", price: 10, quantity: 1 },
-    { id: 2, name: "Rose", price: 12, quantity: 1 },
-  ]);
+  const cartItems = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
-  // Increase quantity
-  const increaseQty = (id) => {
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      )
+  const calculateTotalAmount = () => {
+    return cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
     );
-  };
-
-  // Decrease quantity
-  const decreaseQty = (id) => {
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
-  };
-
-  // Delete item
-  const deleteItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
-  };
-
-  // Total calculation
-  const total = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-
-  // Checkout button
-  const handleCheckout = () => {
-    alert("Coming Soon");
   };
 
   return (
@@ -54,24 +23,29 @@ const CartItem = () => {
           <p>₹{item.price}</p>
           <p>Quantity: {item.quantity}</p>
 
-          <button onClick={() => increaseQty(item.id)}>+</button>
-          <button onClick={() => decreaseQty(item.id)}>-</button>
+          <button onClick={() => dispatch(increment(item.id))}>+</button>
+          <button onClick={() => dispatch(decrement(item.id))}>-</button>
 
-          {/* IMPORTANT: className required */}
           <button
             className="delete-btn"
-            onClick={() => deleteItem(item.id)}
+            onClick={() => dispatch(removeItem(item.id))}
           >
             Delete
           </button>
         </div>
       ))}
 
-      <h2>Total: ₹{total}</h2>
+      {/* ✅ REQUIRED FORMAT */}
+      <h2>Total Cart Amount: ₹{calculateTotalAmount()}</h2>
 
-      {/* Checkout button FIX */}
-      <button onClick={handleCheckout}>
+      {/* ✅ REQUIRED BUTTON */}
+      <button onClick={() => alert("Coming Soon")}>
         Checkout
+      </button>
+
+      {/* ✅ REQUIRED BUTTON */}
+      <button>
+        Continue Shopping
       </button>
     </div>
   );
