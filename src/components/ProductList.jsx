@@ -1,48 +1,104 @@
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../redux/CartSlice";
+import { addItem } from "../redux/cartSlice";
 
 const plants = [
-  { id: 1, name: "Aloe Vera", price: 10, category: "Indoor" },
-  { id: 2, name: "Snake Plant", price: 15, category: "Indoor" },
-  { id: 3, name: "Money Plant", price: 12, category: "Indoor" },
-  { id: 4, name: "Rose", price: 20, category: "Outdoor" },
-  { id: 5, name: "Tulip", price: 25, category: "Outdoor" },
-  { id: 6, name: "Sunflower", price: 18, category: "Outdoor" }
+  {
+    id: 1,
+    name: "Aloe Vera",
+    price: 10,
+    category: "Medicinal",
+    image: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Aloe_vera_flower.JPG",
+  },
+  {
+    id: 2,
+    name: "Tulsi",
+    price: 8,
+    category: "Medicinal",
+    image: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Tulsi_plant.jpg",
+  },
+  {
+    id: 3,
+    name: "Snake Plant",
+    price: 15,
+    category: "Indoor",
+    image: "https://upload.wikimedia.org/wikipedia/commons/2/2d/Sansevieria_trifasciata.jpg",
+  },
+  {
+    id: 4,
+    name: "Peace Lily",
+    price: 18,
+    category: "Indoor",
+    image: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Spathiphyllum_cochlearispathum_RTBG.jpg",
+  },
+  {
+    id: 5,
+    name: "Rose",
+    price: 12,
+    category: "Flowering",
+    image: "https://upload.wikimedia.org/wikipedia/commons/b/bf/Rose_pink_1.jpg",
+  },
+  {
+    id: 6,
+    name: "Sunflower",
+    price: 14,
+    category: "Flowering",
+    image: "https://upload.wikimedia.org/wikipedia/commons/4/40/Sunflower_sky_backdrop.jpg",
+  },
 ];
 
-function ProductList() {
+const ProductList = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector(state => state.cart.items);
+  const cartItems = useSelector((state) => state.cart);
 
-  const isAdded = (id) => cartItems.some(item => item.id === id);
+  // ✅ REQUIRED HANDLER FUNCTION
+  const handleAddToCart = (plant) => {
+    dispatch(addItem(plant));
+  };
+
+  const isAdded = (id) => {
+    return cartItems.some((item) => item.id === id);
+  };
 
   return (
     <div>
-      <h2>Our Plants 🌿</h2>
+      <h1>Product List</h1>
 
-      {["Indoor", "Outdoor"].map(category => (
+      {["Medicinal", "Indoor", "Flowering"].map((category) => (
         <div key={category}>
-          <h3>{category}</h3>
+          <h2>{category} Plants</h2>
 
-          {plants
-            .filter(p => p.category === category)
-            .map(p => (
-              <div key={p.id}>
-                <h4>{p.name}</h4>
-                <p>${p.price}</p>
+          <div style={{ display: "flex", gap: "20px" }}>
+            {plants
+              .filter((p) => p.category === category)
+              .map((plant) => (
+                <div key={plant.id}>
+                  
+                  {/* ✅ CLEAR THUMBNAIL IMAGE */}
+                  <img
+                    src={plant.image}
+                    alt={plant.name}
+                    width="150"
+                    height="150"
+                  />
 
-                <button
-                  onClick={() => dispatch(addToCart(p))}
-                  disabled={isAdded(p.id)}
-                >
-                  {isAdded(p.id) ? "Added" : "Add to Cart"}
-                </button>
-              </div>
-            ))}
+                  <h3>{plant.name}</h3>
+                  <p>₹{plant.price}</p>
+
+                  <button
+                    onClick={() => handleAddToCart(plant)}
+                    disabled={isAdded(plant.id)}
+                  >
+                    {isAdded(plant.id) ? "Added" : "Add to Cart"}
+                  </button>
+
+                </div>
+              ))}
+          </div>
         </div>
       ))}
     </div>
   );
-}
+};
 
 export default ProductList;
