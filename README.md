@@ -1,16 +1,26 @@
-# React + Vite
+# 🌱 e-plantShopping
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Project Description
+e-plantShopping is a React-based web application that allows users to browse and purchase plants online. The app provides a simple and user-friendly interface for selecting plants, adding them to a cart, and managing purchases.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Features
+- 🌿 Browse a variety of plants
+- 🛒 Add plants to cart
+- ➕ Increase/decrease quantity
+- ❌ Remove items from cart
+- 💰 View total price dynamically
+- ⚡ Fast UI using React + Vite
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Technologies Used
+- React.js
+- Vite
+- JavaScript (ES6)
+- HTML5 & CSS3
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📂 Project Structure
